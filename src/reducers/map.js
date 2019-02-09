@@ -2,6 +2,8 @@ import * as type from '../constants/map'
 
 const initialState = {
   data: [],
+  mapView: false,
+  loadingTime: null,
 }
 
 const map = (state = initialState, action) => {
@@ -10,6 +12,12 @@ const map = (state = initialState, action) => {
     return {
       ...state,
       data: action.data,
+      mapView: true,
+    }
+  case type.UPDATE_DATA_LOADING_TIME:
+    return {
+      ...state,
+      loadingTime: action.interval,
     }
   case type.SYNC_FAILED_MAP:
     return { ...state, errorMessage: action.message, progress: false }

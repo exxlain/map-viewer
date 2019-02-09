@@ -15,3 +15,8 @@ export const syncFailed = message => ({
   type: types.SYNC_FAILED_MAP,
   message,
 })
+
+export const updateDataLoadingTime = interval => ({
+  type: types.UPDATE_DATA_LOADING_TIME,
+  interval,
+})
