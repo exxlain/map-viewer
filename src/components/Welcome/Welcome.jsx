@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import Map from '../Map/Map'
+import Map from '../../containers/Map/Map'
 
 import './Welcome.css'
 import {

@@ -4,6 +4,7 @@ import {
 } from 'react-konva'
 import PropTypes from 'prop-types'
 import Popup from '../Popup/Popup'
+import { width, height } from '../../constants/rectangle'
 // import './.Map.css'
 
 class Rectangle extends React.Component {
@@ -13,13 +14,13 @@ class Rectangle extends React.Component {
 
   handleMouseEnter=() => {
     this.setState({ popupOpen: true })
-    console.log(1111)
   }
 
   handleMouseLeave=() => {
     this.setState({ popupOpen: false })
-    console.log(222222)
   }
+
+  checkForEmptyInfo=info => info.objects.length || info.terrain
 
   render() {
     const { popupOpen } = this.state
@@ -31,14 +32,14 @@ class Rectangle extends React.Component {
         <Rect
           x={xValue}
           y={yValue}
-          width={10}
-          height={10}
+          width={width}
+          height={height}
           fill={color}
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
 
         />
-        { popupOpen && <Popup info={info} xValue={xValue} yValue={yValue} /> }
+        { popupOpen && this.checkForEmptyInfo(info) && <Popup info={info} xValue={xValue} yValue={yValue} /> }
       </React.Fragment>
     )
   }
@@ -50,5 +51,5 @@ Rectangle.propTypes = {
   color: PropTypes.string.isRequired,
   xValue: PropTypes.number.isRequired,
   yValue: PropTypes.number.isRequired,
-  info: PropTypes.string.isRequired,
+  info: PropTypes.object.isRequired,
 }

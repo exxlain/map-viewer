@@ -15,7 +15,6 @@ const shadowInLogic = createLogic({
         const interval = (end - start)
         dispatch(updateDataLoadingTime(interval))
         const { data } = response
-        console.log(data)
         dispatch(updateMap(data, interval))
         done()
       }).catch((error) => {
