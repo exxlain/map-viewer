@@ -5,7 +5,7 @@ import {
 import PropTypes from 'prop-types'
 import Popup from '../Popup/Popup'
 import { width, height } from '../../constants/rectangle'
-// import './.Map.css'
+import { defineColor } from '../../helpers/defineColor'
 
 class Rectangle extends React.Component {
   state = {
@@ -25,7 +25,7 @@ class Rectangle extends React.Component {
   render() {
     const { popupOpen } = this.state
     const {
-      color, xValue, yValue, info,
+      xValue, yValue, info,
     } = this.props
     return (
       <React.Fragment>
@@ -34,7 +34,7 @@ class Rectangle extends React.Component {
           y={yValue}
           width={width}
           height={height}
-          fill={color}
+          fill={defineColor(info)}
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
 
@@ -48,7 +48,6 @@ class Rectangle extends React.Component {
 export default Rectangle
 
 Rectangle.propTypes = {
-  color: PropTypes.string.isRequired,
   xValue: PropTypes.number.isRequired,
   yValue: PropTypes.number.isRequired,
   info: PropTypes.object.isRequired,

@@ -1,8 +1,9 @@
 import React from 'react'
 import { Layer, Stage } from 'react-konva'
+import { uid } from 'react-uid'
 import PropTypes from 'prop-types'
 import Rectangle from '../Rectangle/Rectangle'
-// import './.Map.css'
+import './Map.css'
 import { width, height } from '../../constants/rectangle'
 import { countInfo } from '../../helpers/infoCounter'
 
@@ -10,6 +11,14 @@ class Map extends React.Component {
   state = {
     showInfo: false,
     info: [],
+    renderingTime: null,
+  }
+
+  componentDidMount() {
+    const { startRenderingTime } = this.props
+    const end = new Date()
+    const renderingTime = end - startRenderingTime
+    this.setState({ renderingTime })
   }
 
   createMapView=() => {
@@ -17,7 +26,6 @@ class Map extends React.Component {
     return (
       data.map(el => (
         <Rectangle
-          color="green"
           xValue={el.x * width}
           yValue={el.y * height}
           info={el}
@@ -28,7 +36,12 @@ class Map extends React.Component {
   }
 
   showInfo=infoArr => infoArr.map(el => (
-    <li>
+    <li
+      key={uid(el)}
+      style={{
+        color: 'white',
+      }}
+    >
       {el}
     </li>
   ))
@@ -41,16 +54,23 @@ class Map extends React.Component {
 
 
   render() {
-    const { showInfo, info } = this.state
+    const { showInfo, info, renderingTime } = this.state
     const { loadingTime } = this.props
     return (
-      <React.Fragment>
-        <div>
+      <div className="map">
+        <div className="info">
 Data loaded in
           {' '}
           {loadingTime}
           {' '}
 ms
+        </div>
+        <div className="info">
+          Data rendered in
+          {' '}
+          {renderingTime}
+          {' '}
+          ms
         </div>
         <Stage width={700} height={700}>
           <Layer>
@@ -59,7 +79,7 @@ ms
         </Stage>
         <button type="button" onClick={this.countInfo}>show info</button>
         {showInfo && this.showInfo(info)}
-      </React.Fragment>
+      </div>
     )
   }
 }
@@ -67,6 +87,7 @@ ms
 Map.propTypes = {
   loadingTime: PropTypes.number,
   data: PropTypes.arrayOf(PropTypes.object),
+  startRenderingTime: PropTypes.instanceOf(Date).isRequired,
 }
 
 Map.defaultProps = {
@@ -74,22 +95,3 @@ Map.defaultProps = {
   data: null,
 }
 export default Map
-/*
-<Rectangle
-color="green"
-xValue={10 * width}
-yValue={10 * height}
-info={{ objects: [{ def: 'WoodFence', stuffDef: 'WoodLog', artDesc: '' }], x: 59, y: 0 }}
-key={[100, 100]}
-/>
-<Rectangle
-              color="red"
-              xValue={20 * width}
-              yValue={20 * height}
-              info={{
-                terrain: { def: 'Bridge' }, objects: [{ def: 'Wall', stuffDef: 'WoodLog', artDesc: '' }], x: 43, y: 42,
-              }}
-              key={[200, 200]}
-            />
-
-*/

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { uid } from 'react-uid'
 import Portal from './Portal'
 import { parseInfo } from '../../helpers/parseInfo'
 import { topShift, leftShift } from '../../constants/rectangle'
@@ -14,7 +15,7 @@ class Popup extends React.Component {
         <div
           style={{
             position: 'absolute',
-            top: yValue - topShift,
+            top: yValue + topShift,
             left: xValue + leftShift,
             backgroundColor: 'rgba(236, 236, 236, 0.5)',
             color: 'rgb(10, 10, 10)',
@@ -29,8 +30,8 @@ class Popup extends React.Component {
             fontSize: '14px',
           }}
           >
-            {parseInfo(info).map(el => (
-              <li>
+            {parseInfo(info).map((el, index) => (
+              <li key={uid(el, index)}>
                 {el}
               </li>
             ))}

@@ -20,3 +20,8 @@ export const updateDataLoadingTime = interval => ({
   type: types.UPDATE_DATA_LOADING_TIME,
   interval,
 })
+
+export const setStartRenderingTime = time => ({
+  type: types.SET_START_RENDERING_TIME,
+  time,
+})
